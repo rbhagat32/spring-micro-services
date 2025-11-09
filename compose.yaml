@@ -1,0 +1,62 @@
+services:
+  users-db:
+    image: postgres:16
+    container_name: users-db
+    environment:
+      POSTGRES_USER: raghav
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: default
+    volumes:
+      - users-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U raghav -d default"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile.dev
+    depends_on:
+      users-db:
+        condition: service_healthy
+    ports:
+      - "8081:8080"
+    develop:
+      watch:
+        - action: sync
+          path: ./auth-service
+          target: /app
+          ignore:
+            - target/
+            - "**/mvnw"
+            - "**/mvnw.cmd"
+            - "**/.mvn/"
+        - action: rebuild
+          path: ./auth-service/pom.xml
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile.dev
+    depends_on:
+      users-db:
+        condition: service_healthy
+    ports:
+      - "8082:8080"
+    develop:
+      watch:
+        - action: sync
+          path: ./user-service
+          target: /app
+          ignore:
+            - target/
+            - "**/mvnw"
+            - "**/mvnw.cmd"
+            - "**/.mvn/"
+        - action: rebuild
+          path: ./user-service/pom.xml
+
+volumes:
+  users-db:

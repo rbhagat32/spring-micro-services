@@ -1,0 +1,22 @@
+frontend:
+  url:
+    dev: http://localhost:5173
+    prod: http://localhost:3000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://users-db:5432/default
+    username: raghav
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+jwt:
+  secret: 9d9806e102721947a444b056a265a910edcbcd9dce966b4dac10217b1b839414
+  expiration: 1296000000
+
+cookie:
+  expiration: 12960000
