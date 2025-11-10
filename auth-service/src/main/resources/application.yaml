@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 frontend:
   url:
     dev: http://localhost:5173
