@@ -86,7 +86,8 @@ public class GlobalExceptionHandler {
         );
 
         ResponseCookie cookie = cookieUtil.removeCookie("TOKEN");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body((apiError));
     }

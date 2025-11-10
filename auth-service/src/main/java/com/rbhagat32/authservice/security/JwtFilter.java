@@ -9,7 +9,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import java.io.IOException;
 
 @Component
-@Slf4j
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -32,8 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
-            String token = null;
-            String userId = null;
+            String token = null, userId = null;
 
             final String AuthHeader = request.getHeader("Authorization");
             if (AuthHeader != null && AuthHeader.startsWith("Bearer ")) {
@@ -53,7 +50,6 @@ public class JwtFilter extends OncePerRequestFilter {
             }
 
             if (token == null) {
-                log.info("No token found !");
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -65,7 +61,6 @@ public class JwtFilter extends OncePerRequestFilter {
                         .orElseThrow(() -> new JwtException("User not found from extracted userId !"));
 
                 if (!jwtUtil.validateToken(token, userFromDB)) {
-                    log.error("Invalid token !");
                     filterChain.doFilter(request, response);
                     return;
                 }

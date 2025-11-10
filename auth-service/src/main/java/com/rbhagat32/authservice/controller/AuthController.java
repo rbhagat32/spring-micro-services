@@ -31,6 +31,7 @@ public class AuthController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + registerResponse.getToken())
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(registerResponse);
     }
@@ -40,19 +41,27 @@ public class AuthController {
         AuthResponseDTO loginResponse = authService.login(body);
         ResponseCookie cookie = cookieUtil.setCookie(loginResponse, "TOKEN");
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + loginResponse.getToken())
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(loginResponse);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
+    public ResponseEntity<String> logout(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("You are already Logged Out !");
+        }
+
         ResponseCookie cookie = cookieUtil.removeCookie("TOKEN");
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logged out successfully");
+                .body("Logged Out Successfully !");
     }
 
     @GetMapping("/get-user")

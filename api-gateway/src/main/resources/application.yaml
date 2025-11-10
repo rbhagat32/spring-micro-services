@@ -1,24 +1,20 @@
 server:
   port: 8080
 
-spring:
-  cloud:
-    gateway:
-      server:
-        webflux:
-          routes:
-            - id: auth-service-route
-              uri: http://auth-service:8081 # change host and port to this
-              predicates:
-                - Path=/api/auth/**
-              filters:
-                - StripPrefix=1 # remove /api from uri
+spring.cloud.gateway.server.webflux:
+  routes:
+    - id: auth-service-route
+      uri: http://auth-service:8081 # change host and port to this
+      predicates:
+        - Path=/api/auth/**
+      filters:
+        - StripPrefix=1 # remove /api from uri
 
-              # http:localhost:8080/api/auth/login -> http://auth-service:8081/auth/login
+      # http:localhost:8080/api/auth/login -> http://auth-service:8081/auth/login
 
-            - id: user-service-route
-              uri: http://user-service:8082
-              predicates:
-                - Path=/api/user/**
-              filters:
-                - StripPrefix=1
+    - id: user-service-route
+      uri: http://user-service:8082
+      predicates:
+        - Path=/api/user/**
+      filters:
+        - StripPrefix=1

@@ -16,6 +16,7 @@ import java.time.Instant;
 public class UserEntity {
 
     @Id
+    @Column(updatable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
