@@ -37,7 +37,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                 "Exception: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
@@ -51,7 +52,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
                 "Runtime exception: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
@@ -65,7 +67,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNAUTHORIZED,
                 HttpStatus.UNAUTHORIZED.getReasonPhrase(),
                 "Unauthorized: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
     }
@@ -79,7 +82,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNAUTHORIZED,
                 HttpStatus.UNAUTHORIZED.getReasonPhrase(),
                 "Invalid JWT token: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         ResponseCookie cookie = cookieUtil.removeCookie("TOKEN");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -96,7 +100,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.FORBIDDEN,
                 HttpStatus.FORBIDDEN.getReasonPhrase(),
                 "Access Denied: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(apiError);
     }
@@ -110,7 +115,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND,
                 HttpStatus.NOT_FOUND.getReasonPhrase(),
                 "Username not found: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
@@ -124,7 +130,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST,
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "Bad credentials: " + ex.getMessage(),
-                request.getRequestURI());
+                request.getRequestURI()
+        );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
