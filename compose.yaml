@@ -42,8 +42,6 @@ services:
     depends_on:
       users-db:
         condition: service_healthy
-    ports:
-      - "8081:8081"
     develop:
       watch:
         - action: sync
@@ -65,8 +63,6 @@ services:
     depends_on:
       users-db:
         condition: service_healthy
-    ports:
-      - "8082:8082"
     develop:
       watch:
         - action: sync
