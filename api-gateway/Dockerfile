@@ -11,6 +11,6 @@ FROM eclipse-temurin:21-jre-alpine AS runner
 WORKDIR /app
 
 COPY --from=builder /app/target/*.jar app.jar
-EXPOSE 8082
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-Duser.timezone=Asia/Kolkata", "-jar", "app.jar"]

@@ -14,6 +14,26 @@ services:
       timeout: 5s
       retries: 10
 
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile.dev
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    develop:
+      watch:
+        - action: sync
+          path: ./api-gateway
+          target: /app
+          ignore:
+            - target/
+            - "**/mvnw"
+            - "**/mvnw.cmd"
+            - "**/.mvn/"
+        - action: rebuild
+          path: ./api-gateway/pom.xml
+
   auth-service:
     build:
       context: ./auth-service
