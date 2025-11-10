@@ -32,8 +32,6 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
-            log.info("JWT Filter: Incoming request on {}", request.getRequestURI());
-
             String token = null;
             String userId = null;
 

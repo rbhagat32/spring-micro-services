@@ -1,7 +1,5 @@
 package com.rbhagat32.authservice.security;
 
-import com.rbhagat32.authservice.exception.CustomAccessDeniedHandler;
-import com.rbhagat32.authservice.exception.JwtEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,8 +33,6 @@ public class SecurityConfig {
     private String FRONTEND_URL_PROD;
 
     private final JwtFilter jwtFilter;
-    private final JwtEntryPoint jwtEntryPoint;
-    private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
@@ -47,11 +43,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors -> cors.configurationSource(corsConfig()))
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint(jwtEntryPoint)
-                        .accessDeniedHandler(customAccessDeniedHandler)
-                );
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
