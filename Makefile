@@ -4,6 +4,6 @@ dev:
 prod:
 	docker compose up --build -d
 
-clean:
+stop:
 	docker compose down --rmi local --remove-orphans
 	docker image prune -f
