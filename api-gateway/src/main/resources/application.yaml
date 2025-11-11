@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+auth:
+  service:
+    url: http://auth-service:8081
+
 spring.cloud.gateway.server.webflux:
   routes:
     - id: auth-service-route
@@ -18,3 +22,4 @@ spring.cloud.gateway.server.webflux:
         - Path=/api/user/**
       filters:
         - StripPrefix=1
+        - JwtValidation

@@ -55,12 +55,9 @@ public class JwtUtil {
         }
     }
 
-    public boolean validateToken(String token, UserEntity user) {
+    public boolean validateToken(String token) {
         final String userIdFromToken = extractUserId(token);
-        final String userIdFromDB = user.getId();
 
-        return userIdFromToken != null &&
-                !isTokenExpired(token) &&
-                userIdFromToken.equals(userIdFromDB);
+        return userIdFromToken != null && !isTokenExpired(token);
     }
 }

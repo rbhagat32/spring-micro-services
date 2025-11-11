@@ -60,7 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 UserEntity userFromDB = userRepository.findById(userId)
                         .orElseThrow(() -> new JwtException("User not found from extracted userId !"));
 
-                if (!jwtUtil.validateToken(token, userFromDB)) {
+                if (!jwtUtil.validateToken(token)) {
                     filterChain.doFilter(request, response);
                     return;
                 }

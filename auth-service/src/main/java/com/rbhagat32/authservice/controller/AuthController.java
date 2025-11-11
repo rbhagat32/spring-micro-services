@@ -4,6 +4,7 @@ import com.rbhagat32.authservice.dto.AuthResponseDTO;
 import com.rbhagat32.authservice.dto.LoginRequestDTO;
 import com.rbhagat32.authservice.dto.RegisterRequestDTO;
 import com.rbhagat32.authservice.dto.UserDTO;
+import com.rbhagat32.authservice.security.JwtUtil;
 import com.rbhagat32.authservice.service.AuthService;
 import com.rbhagat32.authservice.utils.CookieUtil;
 import jakarta.validation.Valid;
@@ -22,6 +23,22 @@ public class AuthController {
 
     private final AuthService authService;
     private final CookieUtil cookieUtil;
+    private final JwtUtil jwtUtil;
+
+    @GetMapping("/validate-token")
+    public ResponseEntity<Void> validateToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String token = authHeader.substring(7);
+        try {
+            jwtUtil.validateToken(token);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO body) {
