@@ -50,7 +50,10 @@ public class AuthController {
                 .status(HttpStatus.CREATED)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + registerResponse.getToken())
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(registerResponse);
+                .body(new AuthResponseDTO(
+                        "Bearer " + registerResponse.getToken(),
+                        registerResponse.getUser())
+                );
     }
 
     @PostMapping("/login")
@@ -62,7 +65,10 @@ public class AuthController {
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + loginResponse.getToken())
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(loginResponse);
+                .body(new AuthResponseDTO(
+                        "Bearer " + loginResponse.getToken(),
+                        loginResponse.getUser())
+                );
     }
 
     @PostMapping("/logout")
