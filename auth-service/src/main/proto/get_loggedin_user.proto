@@ -1,13 +1,15 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "auth";
+option java_package = "GetLoggedInUser";
 
-service AuthService {
+service GetLoggedInUserService {
   rpc GetLoggedInUser (GetLoggedInUserRequest) returns (GetLoggedInUserResponse);
 }
 
-message GetLoggedInUserRequest {}
+message GetLoggedInUserRequest {
+  string TOKEN = 1;
+}
 
 message GetLoggedInUserResponse {
   string id = 1;

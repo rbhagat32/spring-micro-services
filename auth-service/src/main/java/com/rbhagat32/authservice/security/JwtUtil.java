@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
 
-@Slf4j
 @Component
+@Slf4j
 public class JwtUtil {
 
     @Value("${jwt.secret}")
