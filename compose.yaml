@@ -40,6 +40,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: auth-service
     ports:
+      - "8081:8081"
       - "9091:9091"
     depends_on:
       users-db:
@@ -62,6 +63,8 @@ services:
       context: ./user-service
       dockerfile: Dockerfile.dev
     container_name: user-service
+    ports:
+      - "8082:8082"
     depends_on:
       users-db:
         condition: service_healthy
