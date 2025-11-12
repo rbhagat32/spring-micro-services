@@ -5,6 +5,12 @@ grpc:
   server:
     port: 9092
 
+auth:
+  service:
+    host: auth-service
+    grpc:
+      port: 9091
+
 spring:
   datasource:
     url: jdbc:postgresql://users-db:5432/default

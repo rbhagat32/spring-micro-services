@@ -58,6 +58,7 @@ public class GetLoggedInUserService extends GetLoggedInUserServiceImplBase {
                     .setId(loggedInUser.getId())
                     .setName(loggedInUser.getName())
                     .setEmail(loggedInUser.getEmail())
+                    .setPassword(loggedInUser.getPassword())
                     .setCreatedAt(loggedInUser.getCreatedAt().toString())
                     .setUpdatedAt(loggedInUser.getUpdatedAt().toString())
                     .build();
