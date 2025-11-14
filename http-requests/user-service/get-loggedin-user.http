@@ -1,0 +1,5 @@
+### Get Loggedin User
+
+GET http://localhost:8080/api/user/get-user
+
+###
