@@ -20,8 +20,6 @@ public class GetLoggedInUserService extends GetLoggedInUserServiceImplBase {
 
     @Override
     public void getLoggedInUser(GetLoggedInUserRequest request, StreamObserver<GetLoggedInUserResponse> responseObserver) {
-        System.out.println("GetLoggedInUser GRPC request received on Auth-Service => " + request.toString());
-
         try {
             String token = request.getTOKEN();
 

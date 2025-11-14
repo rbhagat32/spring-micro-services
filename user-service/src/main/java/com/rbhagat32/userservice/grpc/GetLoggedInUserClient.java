@@ -26,7 +26,6 @@ public class GetLoggedInUserClient {
         GetLoggedInUserRequest request = GetLoggedInUserRequest.newBuilder().setTOKEN(TOKEN).build();
 
         GetLoggedInUserResponse response = blockingStub.getLoggedInUser(request);
-        System.out.println("GetLoggedInUser GRPC Response received from Auth-Service: " + response);
         return response;
     }
 }
