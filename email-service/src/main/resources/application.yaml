@@ -1,6 +1,13 @@
 server:
   port: 8083
 
+logging:
+  level:
+    org.mongodb: OFF
+    com.mongodb: OFF
+    org.apache.kafka: OFF
+    org.springframework.kafka: OFF
+
 spring:
   data:
     mongodb:
