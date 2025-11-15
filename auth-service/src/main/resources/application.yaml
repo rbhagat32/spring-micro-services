@@ -1,6 +1,11 @@
 server:
   port: 8081
 
+logging:
+  level:
+    org.apache.kafka: OFF
+    org.springframework.kafka: OFF
+
 grpc:
   server:
     port: 9091
@@ -20,6 +25,13 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
 
 jwt:
   secret: 9d9806e102721947a444b056a265a910edcbcd9dce966b4dac10217b1b839414

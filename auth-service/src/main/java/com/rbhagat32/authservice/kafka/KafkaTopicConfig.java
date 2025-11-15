@@ -1,4 +1,4 @@
-package com.rbhagat32.emailservice.kafka;
+package com.rbhagat32.authservice.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
