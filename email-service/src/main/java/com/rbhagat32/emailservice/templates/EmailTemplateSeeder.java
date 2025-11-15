@@ -1,4 +1,4 @@
-package com.rbhagat32.emailservice.seed;
+package com.rbhagat32.emailservice.templates;
 
 import com.rbhagat32.emailservice.entity.EmailTemplateEntity;
 import com.rbhagat32.emailservice.enums.EmailType;
