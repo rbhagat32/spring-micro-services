@@ -25,7 +25,7 @@ services:
     volumes:
       - email-db:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "mongodb://raghav:password@localhost:27017", "--eval", "db.adminCommand('ping')" ]
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
       interval: 5s
       timeout: 5s
       retries: 10
