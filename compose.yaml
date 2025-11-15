@@ -76,5 +76,26 @@ services:
         - action: rebuild
           path: ./user-service/pom.xml
 
+  email-service:
+    build:
+      context: ./email-service
+      dockerfile: Dockerfile.dev
+    container_name: email-service
+    #    depends_on:
+    #      users-db:
+    #        condition: service_healthy
+    develop:
+      watch:
+        - action: sync
+          path: ./email-service
+          target: /app
+          ignore:
+            - target/
+            - "**/mvnw"
+            - "**/mvnw.cmd"
+            - "**/.mvn/"
+        - action: rebuild
+          path: ./email-service/pom.xml
+
 volumes:
   users-db:

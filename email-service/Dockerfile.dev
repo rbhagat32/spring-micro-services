@@ -1,0 +1,12 @@
+FROM maven:3.9-eclipse-temurin-21
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y entr
+
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+COPY src ./src
+EXPOSE 8083
+
+CMD find src/main | entr -n -r mvn spring-boot:run
