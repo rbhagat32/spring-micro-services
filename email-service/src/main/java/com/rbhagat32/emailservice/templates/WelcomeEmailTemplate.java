@@ -9,14 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class EmailTemplateSeeder implements CommandLineRunner {
+public class WelcomeEmailTemplate implements CommandLineRunner {
 
     private final EmailTemplateRepository emailTemplateRepository;
 
     @Override
     public void run(String... args) {
-
-        // Seed only if WELCOME_EMAIL template is not present in db
         if (!emailTemplateRepository.existsByType(EmailType.WELCOME_EMAIL)) {
 
             EmailTemplateEntity welcomeTemplate = new EmailTemplateEntity();
@@ -26,7 +24,7 @@ public class EmailTemplateSeeder implements CommandLineRunner {
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f9fafb; padding: 24px; border-radius: 10px; color: #333; line-height: 1.6;">
                         <h2 style="color: #1a202c;">Welcome to Micro-Services !</h2>
                         <p>Hi {{name}},</p>
-                        <p>You have successfully registered using: {{email}}</p>
+                        <p>You have successfully registered using: <strong>{{email}}</strong></p>
                     
                         <p>We’re thrilled to have you join our growing community !</p>
                         <p>Here’s what you can do next:</p>
@@ -47,7 +45,6 @@ public class EmailTemplateSeeder implements CommandLineRunner {
 
             emailTemplateRepository.save(welcomeTemplate);
             System.out.println("Seeded WELCOME_EMAIL template successfully");
-
         } else {
             System.out.println("WELCOME_EMAIL template already exists");
         }
