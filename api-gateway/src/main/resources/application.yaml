@@ -23,3 +23,6 @@ spring.cloud.gateway.server.webflux:
       filters:
         - StripPrefix=1
         - JwtValidation
+
+    # no email-service bcos it has no direct api that can be called via gateway.
+    # email-service acts upon events produced into kafka.
