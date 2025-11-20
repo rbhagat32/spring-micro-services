@@ -25,7 +25,7 @@ public class EmailConsumer {
         try {
             EmailTemplateEntity template = emailTemplateRepository.findByType(emailEntity.getType())
                     .orElseThrow(() -> new RuntimeException("No template found for type: " + emailEntity.getType()));
-            
+
             String renderedBody = populateTemplate(template.getBody(), emailEntity.getPlaceholders());
 
             MimeMessage message = javaMailSender.createMimeMessage();

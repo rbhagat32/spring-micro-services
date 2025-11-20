@@ -1,6 +1,5 @@
 package com.rbhagat32.emailservice.entity;
 
-
 import com.rbhagat32.emailservice.dto.UserDTO;
 import com.rbhagat32.emailservice.enums.EmailType;
 import lombok.AllArgsConstructor;
