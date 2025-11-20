@@ -17,10 +17,10 @@ public class PasswordResetOtpTemplate implements CommandLineRunner {
     public void run(String... args) {
         if (!emailTemplateRepository.existsByType(EmailType.PASSWORD_RESET_OTP)) {
 
-            EmailTemplateEntity resetTemplate = new EmailTemplateEntity();
-            resetTemplate.setType(EmailType.PASSWORD_RESET_OTP);
-            resetTemplate.setSubject("Password Reset OTP !");
-            resetTemplate.setBody("""
+            EmailTemplateEntity template = new EmailTemplateEntity();
+            template.setType(EmailType.PASSWORD_RESET_OTP);
+            template.setSubject("Password Reset OTP !");
+            template.setBody("""
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f9fafb; padding: 24px; border-radius: 10px; color: #333; line-height: 1.6;">
                         <h2 style="color: #1a202c;">Password Reset OTP !</h2>
                         <p>Hi {{name}},</p>
@@ -41,10 +41,8 @@ public class PasswordResetOtpTemplate implements CommandLineRunner {
                     </div>
                     """);
 
-            emailTemplateRepository.save(resetTemplate);
+            emailTemplateRepository.save(template);
             System.out.println("Seeded PASSWORD_RESET_OTP template successfully");
-        } else {
-            System.out.println("PASSWORD_RESET_OTP template already exists");
         }
     }
 }

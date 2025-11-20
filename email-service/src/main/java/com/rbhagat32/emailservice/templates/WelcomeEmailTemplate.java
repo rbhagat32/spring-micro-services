@@ -17,10 +17,10 @@ public class WelcomeEmailTemplate implements CommandLineRunner {
     public void run(String... args) {
         if (!emailTemplateRepository.existsByType(EmailType.WELCOME_EMAIL)) {
 
-            EmailTemplateEntity welcomeTemplate = new EmailTemplateEntity();
-            welcomeTemplate.setType(EmailType.WELCOME_EMAIL);
-            welcomeTemplate.setSubject("Welcome to Micro-Services !");
-            welcomeTemplate.setBody("""
+            EmailTemplateEntity template = new EmailTemplateEntity();
+            template.setType(EmailType.WELCOME_EMAIL);
+            template.setSubject("Welcome to Micro-Services !");
+            template.setBody("""
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f9fafb; padding: 24px; border-radius: 10px; color: #333; line-height: 1.6;">
                         <h2 style="color: #1a202c;">Welcome to Micro-Services !</h2>
                         <p>Hi {{name}},</p>
@@ -43,10 +43,8 @@ public class WelcomeEmailTemplate implements CommandLineRunner {
                     </div>
                     """);
 
-            emailTemplateRepository.save(welcomeTemplate);
+            emailTemplateRepository.save(template);
             System.out.println("Seeded WELCOME_EMAIL template successfully");
-        } else {
-            System.out.println("WELCOME_EMAIL template already exists");
         }
     }
 }

@@ -17,10 +17,10 @@ public class NotificationEmailTemplate implements CommandLineRunner {
     public void run(String... args) {
         if (!emailTemplateRepository.existsByType(EmailType.NOTIFICATION)) {
 
-            EmailTemplateEntity notificationTemplate = new EmailTemplateEntity();
-            notificationTemplate.setType(EmailType.NOTIFICATION);
-            notificationTemplate.setSubject("You Have a New Notification !");
-            notificationTemplate.setBody("""
+            EmailTemplateEntity template = new EmailTemplateEntity();
+            template.setType(EmailType.NOTIFICATION);
+            template.setSubject("You Have a New Notification !");
+            template.setBody("""
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f9fafb; padding: 24px; border-radius: 10px; color: #333; line-height: 1.6;">
                         <h2 style="color: #1a202c;">New Notification</h2>
                         <p>Hi {{name}},</p>
@@ -37,10 +37,8 @@ public class NotificationEmailTemplate implements CommandLineRunner {
                     </div>
                     """);
 
-            emailTemplateRepository.save(notificationTemplate);
+            emailTemplateRepository.save(template);
             System.out.println("Seeded NOTIFICATION template successfully");
-        } else {
-            System.out.println("NOTIFICATION template already exists");
         }
     }
 }
