@@ -3,6 +3,9 @@ import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthLayout } from "@/layouts/auth";
 import { RootLayout } from "@/layouts/root";
 import { NotFoundPage } from "@/pages/not-found";
+import { HomePage } from "@/pages/home";
+import { LoginPage } from "@/pages/login";
+import { SignupPage } from "@/pages/signup";
 
 const Routing = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
   return (
@@ -12,7 +15,7 @@ const Routing = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
           path="/"
           element={
             <RootLayout>
-              <div>Home Page</div>
+              <HomePage />
             </RootLayout>
           }
         />
@@ -23,7 +26,7 @@ const Routing = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
           path="/login"
           element={
             <AuthLayout>
-              <div>Login Page</div>
+              <LoginPage />
             </AuthLayout>
           }
         />
@@ -31,7 +34,7 @@ const Routing = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
           path="/signup"
           element={
             <AuthLayout>
-              <div>Signup Page</div>
+              <SignupPage />
             </AuthLayout>
           }
         />
