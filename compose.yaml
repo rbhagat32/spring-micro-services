@@ -144,6 +144,25 @@ services:
         - action: rebuild
           path: ./email-service/pom.xml
 
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: client
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./client/.env
+    develop:
+      watch:
+        - action: sync
+          path: ./client
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
 volumes:
   users-db:
   email-db:
