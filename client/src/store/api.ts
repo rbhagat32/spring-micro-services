@@ -10,12 +10,12 @@ export const api = createApi({
     baseUrl: BACKEND_URL as string,
     credentials: "include",
   }),
-  tagTypes: ["Auth"],
+  tagTypes: ["AUTH"],
 
   endpoints: (builder) => ({
     checkLogin: builder.query<{ isLoggedIn: boolean }, void>({
-      query: () => "auth/check",
-      providesTags: ["Auth"],
+      query: () => "api/auth/check",
+      providesTags: ["AUTH"],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
