@@ -9,7 +9,7 @@
   content: "";
   position: absolute;
   border-radius: 50px;
-  box-shadow: 0 0 0 3px inset #fff;
+  box-shadow: 0 0 0 3px inset var(--foreground);
   animation: l4 2.5s infinite;
 }
 
