@@ -7,7 +7,7 @@ import { HomePage } from "@/pages/home";
 import { LoginPage } from "@/pages/login";
 import { SignupPage } from "@/pages/signup";
 
-const Routing = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
+export function Routing({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <Routes>
       <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} redirect="/login" />}>
@@ -43,6 +43,4 @@ const Routing = ({ isLoggedIn = false }: { isLoggedIn: boolean }) => {
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
-};
-
-export { Routing };
+}

@@ -7,10 +7,8 @@ interface ProtectedRouteProps {
   redirect: string;
 }
 
-const ProtectedRoute = ({ children, isLoggedIn, redirect }: ProtectedRouteProps) => {
+export function ProtectedRoute({ children, isLoggedIn, redirect }: ProtectedRouteProps) {
   if (!isLoggedIn) return <Navigate to={redirect} />;
 
   return children ? children : <Outlet />;
-};
-
-export { ProtectedRoute };
+}
