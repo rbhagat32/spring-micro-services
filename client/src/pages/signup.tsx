@@ -72,7 +72,7 @@ export function SignupPage() {
 
               <div className="grid gap-3">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" {...register("password")} />
+                <Input id="password" {...register("password")} type="password" />
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
