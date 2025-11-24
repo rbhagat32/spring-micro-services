@@ -5,24 +5,38 @@ auth:
   service:
     url: http://auth-service:8081
 
-spring.cloud.gateway.server.webflux:
-  routes:
-    - id: auth-service-route
-      uri: http://auth-service:8081 # change host and port to this
-      predicates:
-        - Path=/api/auth/**
-      filters:
-        - StripPrefix=1 # remove /api from uri
+spring.cloud.gateway:
+  globalcors:
+    corsConfigurations:
+      "[/**]":
+        allowedOrigins:
+          - "http://localhost:5173"
+          - "http://localhost:3000"
+        allowedMethods: "*"
+        allowedHeaders: "*"
+        allowCredentials: true
+    default-filters:
+      - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
 
-      # http:localhost:8080/api/auth/login -> http://auth-service:8081/auth/login
+  server:
+    webflux:
+      routes:
+        - id: auth-service-route
+          uri: http://auth-service:8081 # change host and port to this
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=1 # remove /api from uri
 
-    - id: user-service-route
-      uri: http://user-service:8082
-      predicates:
-        - Path=/api/user/**
-      filters:
-        - StripPrefix=1
-        - JwtValidation
+          # http:localhost:8080/api/auth/login -> http://auth-service:8081/auth/login
 
-    # no email-service bcos it has no direct api that can be called via gateway.
-    # email-service acts upon events produced into kafka.
+        - id: user-service-route
+          uri: http://user-service:8082
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+            - JwtValidation
+
+        # no email-service bcos it has no direct api that can be called via gateway.
+        # email-service acts upon events produced into kafka.
