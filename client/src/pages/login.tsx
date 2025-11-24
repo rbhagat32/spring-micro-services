@@ -31,7 +31,7 @@ export function LoginPage() {
 
     const res = await login(formData);
 
-    if (res.data) reset();
+    if (!res.error) reset();
     // ProtectedRoute will redirect automatically when user-slice updates using useLoginMutation
   };
 

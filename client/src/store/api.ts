@@ -42,7 +42,7 @@ export const api = createApi({
           dispatch(setUser(data.user));
           toast.success(`Welcome back, ${data.user.name}!`);
         } catch (err: any) {
-          toast.error(err?.data?.message || "Failed to Log In !");
+          toast.error(err.error.data.message || "Failed to Log In !");
           console.error("Login error:", err);
         }
       },
@@ -62,7 +62,7 @@ export const api = createApi({
           dispatch(setUser(data.user));
           toast.success(`Account created! Welcome, ${data.user.name}!`);
         } catch (err: any) {
-          toast.error(err?.data?.message || "Failed to Sign Up !");
+          toast.error(err.error.data.message || "Failed to Sign Up !");
           console.error("Signup error:", err);
         }
       },
@@ -81,7 +81,7 @@ export const api = createApi({
           dispatch(api.util.resetApiState());
           toast.success(data.message || "Logged out successfully!");
         } catch (err: any) {
-          toast.error(err?.data?.message || "Failed to Log Out !");
+          toast.error(err.error.data.message || "Failed to Log Out !");
           console.error("Logout error:", err);
         }
       },
