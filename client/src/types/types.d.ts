@@ -1,3 +1,7 @@
+export interface IStore {
+  user: UserDTO;
+}
+
 export interface LoginFormData {
   email: string;
   password: string;

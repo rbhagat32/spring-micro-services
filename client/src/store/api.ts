@@ -33,7 +33,6 @@ export const api = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["USER"],
 
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -53,7 +52,6 @@ export const api = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["USER"],
 
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -77,7 +75,6 @@ export const api = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(clearUser());
-          dispatch(api.util.resetApiState());
           toast.success(data.message || "Logged out successfully!");
         } catch (err: any) {
           toast.error(err.error.data.message || "Failed to Log Out !");
