@@ -4,13 +4,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useForm, type SubmitHandler } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/schemas/login";
 import { api } from "@/lib/axios";
+import { type UserDTO } from "@/types/types";
 
 interface LoginFormData {
   email: string;
   password: string;
+}
+
+interface LoginResponse {
+  token: string;
+  user: UserDTO;
 }
 
 export function LoginPage() {
@@ -23,16 +31,27 @@ export function LoginPage() {
     reset,
     trigger,
     formState: { errors },
-  } = useForm<LoginFormData>();
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: "onSubmit",
+  });
+
+  const validation = async (data: LoginFormData) => {
+    const isValid = await trigger();
+    if (!isValid) return;
+    handleLogin(data);
+  };
 
   const handleLogin: SubmitHandler<LoginFormData> = async (data) => {
     setLoading(true);
     try {
-      const res = await api.post<{ message: string }>("/api/auth/login", data);
+      const res = await api.post<LoginResponse>("/api/auth/login", data);
       reset();
-      // dispatch(setAuth(true));
-      navigate("/");
-      toast.success(res.data.message);
+
+      if (res.status === 200) {
+        toast.success(`Welcome back, ${res.data.user.name}!`);
+        navigate("/");
+      }
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to Log In !");
       console.error("Failed to Login:", error);
@@ -41,18 +60,10 @@ export function LoginPage() {
     }
   };
 
-  const validation = async (data: LoginFormData) => {
-    const isValid = await trigger();
-    if (!isValid) return;
-    handleLogin(data);
-  };
-
   useEffect(() => {
-    if (errors.email) {
-      toast.error(errors.email.message);
-    } else if (errors.password) {
-      toast.error(errors.password.message);
-    }
+    console.log(errors);
+    if (errors.email) toast.error(errors.email.message);
+    else if (errors.password) toast.error(errors.password.message);
   }, [errors]);
 
   return (
@@ -75,7 +86,7 @@ export function LoginPage() {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" {...register("email")} type="email" required />
+                <Input id="email" {...register("email")} required />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
