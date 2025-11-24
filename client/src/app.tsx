@@ -5,7 +5,7 @@ import { Routing } from "@/lib/routing";
 
 export function App() {
   const loading = false;
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
