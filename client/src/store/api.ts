@@ -79,13 +79,12 @@ export const api = createApi({
         url: "api/auth/logout",
         method: "POST",
       }),
-      invalidatesTags: ["USER"],
 
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
           dispatch(clearUser());
-          console.log(data);
+          dispatch(api.util.resetApiState());
           toast.success(data.message || "Logged out successfully!");
         } catch (err: any) {
           toast.error(err?.data?.message || "Failed to Log Out !");
