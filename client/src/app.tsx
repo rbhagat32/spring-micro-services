@@ -1,8 +1,8 @@
-import { ThemeProvider } from "@/context/theme-provider";
 import { PageLoader } from "@/components/custom/page-loader";
-import { Toaster } from "sonner";
+import { ThemeProvider } from "@/context/theme-provider";
 import { Routing } from "@/lib/routing";
 import { useGetLoggedInUserQuery } from "@/store/api";
+import { Toaster } from "sonner";
 
 export function App() {
   const { isFetching, data } = useGetLoggedInUserQuery();

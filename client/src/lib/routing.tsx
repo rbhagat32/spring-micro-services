@@ -1,11 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import { ProtectedRoute } from "@/lib/protected-route";
 import { AuthLayout } from "@/layouts/auth";
 import { RootLayout } from "@/layouts/root";
-import { NotFoundPage } from "@/pages/not-found";
+import { ProtectedRoute } from "@/lib/protected-route";
 import { HomePage } from "@/pages/home";
 import { LoginPage } from "@/pages/login";
+import { NotFoundPage } from "@/pages/not-found";
 import { SignupPage } from "@/pages/signup";
+import { Route, Routes } from "react-router-dom";
 
 export function Routing({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (

@@ -1,5 +1,5 @@
 import { clearUser, setUser } from "@/store/reducers/user-slice";
-import type { UserDTO } from "@/types/types";
+import type { LoginFormData, SignupFormData, UserDTO } from "@/types/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { toast } from "sonner";
 
@@ -28,10 +28,7 @@ export const api = createApi({
       },
     }),
 
-    login: builder.mutation<
-      { token: string; user: UserDTO }, // response
-      { email: string; password: string } // body
-    >({
+    login: builder.mutation<{ token: string; user: UserDTO }, LoginFormData>({
       query: (body) => ({
         url: "api/auth/login",
         method: "POST",
@@ -51,10 +48,7 @@ export const api = createApi({
       },
     }),
 
-    signup: builder.mutation<
-      { token: string; user: UserDTO },
-      { name: string; email: string; password: string }
-    >({
+    signup: builder.mutation<{ token: string; user: UserDTO }, SignupFormData>({
       query: (body) => ({
         url: "api/auth/register",
         method: "POST",

@@ -4,16 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginSchema } from "@/schemas/login";
 import { useLoginMutation } from "@/store/api";
+import { type LoginFormData } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
-
-interface LoginFormData {
-  email: string;
-  password: string;
-}
 
 export function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();

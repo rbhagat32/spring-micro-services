@@ -2,19 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
-import { useSignupMutation } from "@/store/api";
 import { signupSchema } from "@/schemas/signup";
+import { useSignupMutation } from "@/store/api";
+import { type SignupFormData } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
-
-interface SignupFormData {
-  name: string;
-  email: string;
-  password: string;
-}
 
 export function SignupPage() {
   const [signup, { isLoading }] = useSignupMutation();

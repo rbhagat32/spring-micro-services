@@ -1,5 +1,5 @@
-import { ThemeSwitcher } from "@/components/custom/theme-switcher";
 import { LogoutButton } from "@/components/custom/logout-button";
+import { ThemeSwitcher } from "@/components/custom/theme-switcher";
 
 export function Navbar() {
   return (
