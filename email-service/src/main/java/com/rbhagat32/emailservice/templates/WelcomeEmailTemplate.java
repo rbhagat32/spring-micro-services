@@ -19,10 +19,10 @@ public class WelcomeEmailTemplate implements CommandLineRunner {
 
             EmailTemplateEntity template = new EmailTemplateEntity();
             template.setType(EmailType.WELCOME_EMAIL);
-            template.setSubject("Welcome to Micro-Services !");
+            template.setSubject("Welcome to Spring Micro-Services !");
             template.setBody("""
                     <div style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f9fafb; padding: 24px; border-radius: 10px; color: #333; line-height: 1.6;">
-                        <h2 style="color: #1a202c;">Welcome to Micro-Services !</h2>
+                        <h2 style="color: #1a202c;">Welcome to Spring Micro-Services !</h2>
                         <p>Hi {{name}},</p>
                         <p>You have successfully registered using: <strong>{{email}}</strong></p>
                     
@@ -37,9 +37,9 @@ public class WelcomeEmailTemplate implements CommandLineRunner {
                     
                         <p>If you ever need help, our support team is just a click away.</p>
                     
-                        <p style="margin-top: 24px;">Thanks again for signing up — we can’t wait to see what you build with <strong>Micro-Services</strong> !</p>
+                        <p style="margin-top: 24px;">Thanks again for signing up — we can’t wait to see what you build with <strong>Spring Micro-Services</strong> !</p>
                     
-                        <p style="margin-top: 20px;">Regards,<br><strong>Micro-Services Team</strong></p>
+                        <p style="margin-top: 20px;">Regards,<br><strong>Spring Micro-Services Team</strong></p>
                     </div>
                     """);
 

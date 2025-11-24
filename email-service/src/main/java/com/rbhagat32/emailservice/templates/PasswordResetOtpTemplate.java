@@ -37,7 +37,7 @@ public class PasswordResetOtpTemplate implements CommandLineRunner {
                     
                         <p>If you did not request a password reset, you can ignore this email. Your account will remain safe.</p>
                     
-                        <p style="margin-top: 20px;">Regards,<br><strong>Micro-Services Team</strong></p>
+                        <p style="margin-top: 20px;">Regards,<br><strong>Spring Micro-Services Team</strong></p>
                     </div>
                     """);
 

@@ -33,7 +33,7 @@ public class NotificationEmailTemplate implements CommandLineRunner {
                     
                         <p>If the notification requires action, please log into your account to continue.</p>
                     
-                        <p style="margin-top: 20px;">Regards,<br><strong>Micro-Services Team</strong></p>
+                        <p style="margin-top: 20px;">Regards,<br><strong>Spring Micro-Services Team</strong></p>
                     </div>
                     """);
 
