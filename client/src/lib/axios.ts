@@ -7,4 +7,4 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export { instance as api };
+export { instance as axios };
