@@ -3,34 +3,48 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
+import { useSignupMutation } from "@/store/api";
+import { signupSchema } from "@/schemas/signup";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import { toast } from "sonner";
 
+interface SignupFormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export function SignupPage() {
-  const submitting = false;
-  const signup = async (name: string, email: string, password: string) => {
-    console.log(name, email, password);
+  const [signup, { isLoading }] = useSignupMutation();
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    trigger,
+    formState: { errors },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    mode: "onSubmit",
+  });
+
+  const onSubmit = async (formData: SignupFormData) => {
+    const valid = await trigger();
+    if (!valid) return;
+
+    const res = await signup(formData);
+
+    if (res.data) reset();
+    // ProtectedRoute will redirect automatically when user-slice updates using useLoginMutation
   };
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLFormElement | HTMLInputElement>
-  ) => {
-    e.preventDefault();
-    if (submitting) return;
-
-    const form = e.currentTarget.closest("form");
-    if (!form) return;
-
-    const formData = new FormData(form);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    try {
-      await signup(name, email, password);
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Sign Up failed. Try again.");
-    }
-  };
+  useEffect(() => {
+    if (errors.name) toast.error(errors.name.message);
+    else if (errors.email) toast.error(errors.email.message);
+    else if (errors.password) toast.error(errors.password.message);
+  }, [errors]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -44,12 +58,7 @@ export function SignupPage() {
             />
           </div>
 
-          <form
-            className="p-6 md:p-8"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit(e);
-            }}
-          >
+          <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Welcome</h1>
@@ -60,20 +69,20 @@ export function SignupPage() {
 
               <div className="grid gap-3">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" name="name" type="text" required />
+                <Input id="name" {...register("name")} />
               </div>
 
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" required />
+                <Input id="email" {...register("email")} />
               </div>
 
               <div className="grid gap-3">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" name="password" type="password" required />
+                <Input id="password" type="password" {...register("password")} />
               </div>
 
-              <Button type="button" className="w-full" onClick={handleSubmit} disabled={submitting}>
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 Sign up
               </Button>
 

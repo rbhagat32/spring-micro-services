@@ -46,7 +46,29 @@ export const api = createApi({
         }
       },
     }),
+
+    signup: builder.mutation<
+      { token: string; user: UserDTO },
+      { name: string; email: string; password: string }
+    >({
+      query: (body) => ({
+        url: "api/auth/register",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["USER"],
+
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setUser(data.user));
+          toast.success(`Account created! Welcome, ${data.user.name}!`);
+        } catch (err: any) {
+          toast.error(err?.data?.message || "Failed to Sign Up !");
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetLoggedInUserQuery, useLoginMutation } = api;
+export const { useGetLoggedInUserQuery, useLoginMutation, useSignupMutation } = api;
