@@ -1,4 +1,4 @@
-import { setUser } from "@/store/reducers/user-slice";
+import { clearUser, setUser } from "@/store/reducers/user-slice";
 import type { UserDTO } from "@/types/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { toast } from "sonner";
@@ -21,7 +21,10 @@ export const api = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setUser(data));
-        } catch {}
+        } catch (err: any) {
+          dispatch(clearUser());
+          console.error("Get LoggedIn User error:", err);
+        }
       },
     }),
 
@@ -43,6 +46,7 @@ export const api = createApi({
           toast.success(`Welcome back, ${data.user.name}!`);
         } catch (err: any) {
           toast.error(err?.data?.message || "Failed to Log In !");
+          console.error("Login error:", err);
         }
       },
     }),
@@ -65,10 +69,32 @@ export const api = createApi({
           toast.success(`Account created! Welcome, ${data.user.name}!`);
         } catch (err: any) {
           toast.error(err?.data?.message || "Failed to Sign Up !");
+          console.error("Signup error:", err);
+        }
+      },
+    }),
+
+    logout: builder.mutation<{ message: string }, void>({
+      query: () => ({
+        url: "api/auth/logout",
+        method: "POST",
+      }),
+      invalidatesTags: ["USER"],
+
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(clearUser());
+          console.log(data);
+          toast.success(data.message || "Logged out successfully!");
+        } catch (err: any) {
+          toast.error(err?.data?.message || "Failed to Log Out !");
+          console.error("Logout error:", err);
         }
       },
     }),
   }),
 });
 
-export const { useGetLoggedInUserQuery, useLoginMutation, useSignupMutation } = api;
+export const { useGetLoggedInUserQuery, useLoginMutation, useSignupMutation, useLogoutMutation } =
+  api;

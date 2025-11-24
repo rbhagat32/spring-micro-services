@@ -1,13 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type UserDTO } from "@/types/types";
 
-const initialState: UserDTO = {
-  id: "",
-  name: "",
-  email: "",
-  createdAt: "",
-  updatedAt: "",
-};
+const initialState: UserDTO | {} = {};
 
 const UserSlice = createSlice({
   name: "user",
