@@ -49,7 +49,7 @@ export function SignupPage() {
             <img
               src="/tendou.jpeg"
               alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.5]"
+              className="absolute inset-0 h-full w-full rotate-180 object-cover dark:brightness-[0.5]"
             />
           </div>
 
