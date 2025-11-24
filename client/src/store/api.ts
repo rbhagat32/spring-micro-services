@@ -23,7 +23,6 @@ export const api = createApi({
           dispatch(setUser(data));
         } catch (err: any) {
           dispatch(clearUser());
-          console.error("Get LoggedIn User error:", err);
         }
       },
     }),
