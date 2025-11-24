@@ -30,9 +30,7 @@ export function SignupPage() {
     if (!valid) return;
 
     const res = await signup(formData);
-
     if (res.data) reset();
-    // ProtectedRoute will redirect automatically when user-slice updates using useLoginMutation
   };
 
   useEffect(() => {
