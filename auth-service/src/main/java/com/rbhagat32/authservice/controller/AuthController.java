@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -72,19 +74,19 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(Authentication authentication) {
+    public ResponseEntity<Map<String, String>> logout(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body("You are already Logged Out !");
+                    .body(Map.of("message", "You are already Logged Out !"));
         }
 
         ResponseCookie cookie = cookieUtil.removeCookie("TOKEN");
 
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Logged Out Successfully !");
+                .body(Map.of("message", "Logged Out Successfully !"));
     }
 
     @GetMapping("/get-user")
