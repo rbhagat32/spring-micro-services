@@ -2,34 +2,58 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/axios";
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 export function LoginPage() {
-  const submitting = false;
-  const login = async (email: string, password: string) => {
-    console.log(email, password);
-  };
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLFormElement | HTMLInputElement>
-  ) => {
-    e.preventDefault();
-    if (submitting) return;
+  const {
+    handleSubmit,
+    register,
+    reset,
+    trigger,
+    formState: { errors },
+  } = useForm<LoginFormData>();
 
-    const form = e.currentTarget.closest("form");
-    if (!form) return;
-
-    const formData = new FormData(form);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
+  const handleLogin: SubmitHandler<LoginFormData> = async (data) => {
+    setLoading(true);
     try {
-      await login(email, password);
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || "Login failed. Check credentials.");
+      const res = await api.post<{ message: string }>("/api/auth/login", data);
+      reset();
+      // dispatch(setAuth(true));
+      navigate("/");
+      toast.success(res.data.message);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Failed to Log In !");
+      console.error("Failed to Login:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const validation = async (data: LoginFormData) => {
+    const isValid = await trigger();
+    if (!isValid) return;
+    handleLogin(data);
+  };
+
+  useEffect(() => {
+    if (errors.email) {
+      toast.error(errors.email.message);
+    } else if (errors.password) {
+      toast.error(errors.password.message);
+    }
+  }, [errors]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -37,8 +61,9 @@ export function LoginPage() {
         <CardContent className="grid p-0 md:grid-cols-2">
           <form
             className="p-6 md:p-8"
+            onSubmit={handleSubmit(validation)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleSubmit(e);
+              if (e.key === "Enter") handleSubmit(validation);
             }}
           >
             <div className="flex flex-col gap-6">
@@ -50,7 +75,7 @@ export function LoginPage() {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" required />
+                <Input id="email" {...register("email")} type="email" required />
               </div>
               <div className="grid gap-3">
                 <div className="flex items-center">
@@ -62,9 +87,9 @@ export function LoginPage() {
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id="password" name="password" type="password" required />
+                <Input id="password" {...register("password")} type="password" required />
               </div>
-              <Button type="button" className="w-full" onClick={handleSubmit} disabled={submitting}>
+              <Button type="submit" className="w-full" disabled={loading}>
                 Login
               </Button>
 
