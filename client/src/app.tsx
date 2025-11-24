@@ -8,7 +8,7 @@ export function App() {
   const { isFetching, data } = useGetLoggedInUserQuery();
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+    <ThemeProvider>
       <Toaster richColors position="top-center" duration={3000} />
       {isFetching ? <PageLoader fullScreen={true} /> : <Routing isLoggedIn={!!data} />}
     </ThemeProvider>
