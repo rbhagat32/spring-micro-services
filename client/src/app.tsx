@@ -2,21 +2,15 @@ import { ThemeProvider } from "@/context/theme-provider";
 import { PageLoader } from "@/components/custom/page-loader";
 import { Toaster } from "sonner";
 import { Routing } from "@/lib/routing";
+import { useGetLoggedInUserQuery } from "@/store/api";
 
 export function App() {
-  const loading = false;
-  const isLoggedIn = false;
+  const { isFetching, data } = useGetLoggedInUserQuery();
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      {loading ? (
-        <PageLoader fullScreen={true} />
-      ) : (
-        <>
-          <Toaster richColors position="top-center" duration={5000} />
-          <Routing isLoggedIn={!!isLoggedIn} />
-        </>
-      )}
+    <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
+      <Toaster richColors position="top-center" duration={3000} />
+      {isFetching ? <PageLoader fullScreen={true} /> : <Routing isLoggedIn={!!data} />}
     </ThemeProvider>
   );
 }

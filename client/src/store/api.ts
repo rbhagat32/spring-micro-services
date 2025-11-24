@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { toast } from "sonner";
-import { setAuth } from "@/store/reducers/auth-slice";
+import { setUser } from "@/store/reducers/user-slice";
+import type { UserDTO } from "@/types/types";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -10,22 +11,22 @@ export const api = createApi({
     baseUrl: BACKEND_URL as string,
     credentials: "include",
   }),
-  tagTypes: ["AUTH"],
+  tagTypes: ["USER"],
 
   endpoints: (builder) => ({
-    checkLogin: builder.query<{ isLoggedIn: boolean }, void>({
-      query: () => "api/auth/check",
-      providesTags: ["AUTH"],
+    getLoggedInUser: builder.query<UserDTO, void>({
+      query: () => "api/auth/get-user",
+      providesTags: ["USER"],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setAuth(data.isLoggedIn));
+          dispatch(setUser(data));
         } catch (error) {
-          toast.error("Failed to check login status !");
+          toast.error("Failed to fetch logged in user !");
         }
       },
     }),
   }),
 });
 
-export const { useCheckLoginQuery } = api;
+export const { useGetLoggedInUserQuery } = api;

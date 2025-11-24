@@ -2,14 +2,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { api as axios } from "@/lib/axios";
+import { loginSchema } from "@/schemas/login";
+import { api } from "@/store/api";
+import { setUser } from "@/store/reducers/user-slice";
+import { type UserDTO } from "@/types/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/schemas/login";
-import { api } from "@/lib/axios";
-import { type UserDTO } from "@/types/types";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 interface LoginFormData {
   email: string;
@@ -22,7 +25,7 @@ interface LoginResponse {
 }
 
 export function LoginPage() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -45,12 +48,13 @@ export function LoginPage() {
   const handleLogin: SubmitHandler<LoginFormData> = async (data) => {
     setLoading(true);
     try {
-      const res = await api.post<LoginResponse>("/api/auth/login", data);
+      const res = await axios.post<LoginResponse>("/api/auth/login", data);
       reset();
 
       if (res.status === 200) {
+        dispatch(setUser(res.data.user));
+        dispatch(api.util.invalidateTags(["USER"]));
         toast.success(`Welcome back, ${res.data.user.name}!`);
-        navigate("/");
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to Log In !");
@@ -61,7 +65,6 @@ export function LoginPage() {
   };
 
   useEffect(() => {
-    console.log(errors);
     if (errors.email) toast.error(errors.email.message);
     else if (errors.password) toast.error(errors.password.message);
   }, [errors]);
