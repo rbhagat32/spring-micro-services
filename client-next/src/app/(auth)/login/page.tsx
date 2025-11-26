@@ -1,3 +1,4 @@
+import { loginAction } from "@/actions/login";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,7 +11,7 @@ export default function LoginPage() {
     <div className="flex flex-col gap-6">
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form action={loginAction} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Welcome</h1>
@@ -37,7 +38,7 @@ export default function LoginPage() {
                 <Input id="password" name="password" type="password" />
               </div>
 
-              <Button type="submit" className="w-full" disabled={true}>
+              <Button type="submit" className="w-full" disabled={false}>
                 Login
               </Button>
 
