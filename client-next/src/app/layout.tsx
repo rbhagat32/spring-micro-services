@@ -1,5 +1,6 @@
 import "@/app/globals.css";
-import type { Metadata } from "next";
+import { ThemeProvider } from "@/context/theme-provider";
+import { type Metadata } from "next";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -10,8 +11,18 @@ export const metadata: Metadata = {
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <html lang="en">
-        <body className="antialiased">{children}</body>
+      <html lang="en" suppressHydrationWarning>
+        {/* <head /> */}
+        <body className="antialiased">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
       </html>
       <Toaster richColors position="top-center" />
     </>
