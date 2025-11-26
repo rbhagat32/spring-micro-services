@@ -168,6 +168,26 @@ services:
         - action: rebuild
           path: package.json
 
+  client-next:
+    build:
+      context: ./client-next
+      dockerfile: Dockerfile.dev
+    container_name: client-next
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./client-next/.env
+    develop:
+      watch:
+        - action: sync
+          path: ./client-next
+          target: /app
+          ignore:
+            - node_modules/
+            - .next/
+        - action: rebuild
+          path: package.json
+
 volumes:
   users-db:
   email-db:

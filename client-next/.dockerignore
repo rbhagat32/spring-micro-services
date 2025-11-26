@@ -1,0 +1,11 @@
+node_modules
+.next
+.env
+Dockerfile
+Dockerfile.dev
+.dockerignore
+compose.yaml
+.git
+.gitignore
+readme.md
+prettier.config.js
