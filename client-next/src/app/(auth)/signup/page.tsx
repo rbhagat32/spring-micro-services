@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function SignupPage() {
@@ -10,9 +11,12 @@ export default function SignupPage() {
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <div className="bg-muted relative hidden md:block">
-            <img
+            <Image
               src="/tendou.jpeg"
-              alt="Image"
+              alt="Login Image"
+              loading="eager"
+              width={1080}
+              height={1080}
               className="absolute inset-0 h-full w-full rotate-180 object-cover dark:brightness-[0.5]"
             />
           </div>
