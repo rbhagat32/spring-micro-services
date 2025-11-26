@@ -110,15 +110,12 @@ services:
     container_name: client-vite
     ports:
       - "5173:5173"
-    env_file:
-      - ./client-vite/.env
 
   client-next:
     build:
       context: ./client-next
       dockerfile: Dockerfile
       args:
-        BACKEND_URL: http://api-gateway:8080
         NEXT_PUBLIC_BACKEND_URL: http://localhost:8080
     container_name: client-next
     ports:
