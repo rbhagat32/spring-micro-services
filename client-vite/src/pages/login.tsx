@@ -69,7 +69,7 @@ export function LoginPage() {
                 <Input id="password" {...register("password")} type="password" />
               </div>
 
-              <Button className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 Login
               </Button>
 

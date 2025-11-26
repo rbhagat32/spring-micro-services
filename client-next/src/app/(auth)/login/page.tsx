@@ -37,7 +37,7 @@ export default function LoginPage() {
                 <Input id="password" name="password" type="password" />
               </div>
 
-              <Button className="w-full" disabled={true}>
+              <Button type="submit" className="w-full" disabled={true}>
                 Login
               </Button>
 
