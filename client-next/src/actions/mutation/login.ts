@@ -23,13 +23,13 @@ export async function loginAction(_prevState: any, formData: FormData) {
   const { email, password } = parsed.data;
 
   try {
-    const response = await axios.post<{ token: string; user: UserDTO }>("/api/auth/login", {
+    const res = await axios.post<{ token: string; user: UserDTO }>("/api/auth/login", {
       email,
       password,
     });
 
     const cookieStore = await cookies();
-    const cookieData = setCookieParser(response.headers["set-cookie"]);
+    const cookieData = setCookieParser(res.headers["set-cookie"]);
 
     cookieData.forEach((cookie) => {
       // @ts-ignore
