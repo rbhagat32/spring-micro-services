@@ -17,7 +17,7 @@ services:
   email-db:
     image: mongo:7
     container_name: email-db
-    command: ["mongod", "--quiet", "--logpath", "/dev/null"] # disable useless logs
+    command: ["mongod", "--quiet", "--logpath", "/dev/null"]
     environment:
       MONGO_INITDB_ROOT_USERNAME: raghav
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -65,128 +65,66 @@ services:
   api-gateway:
     build:
       context: ./api-gateway
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: api-gateway
     ports:
       - "8080:8080"
-    develop:
-      watch:
-        - action: sync
-          path: ./api-gateway
-          target: /app
-          ignore:
-            - target/
-            - "**/mvnw"
-            - "**/mvnw.cmd"
-            - "**/.mvn/"
-        - action: rebuild
-          path: ./api-gateway/pom.xml
 
   auth-service:
     build:
       context: ./auth-service
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: auth-service
     depends_on:
       users-db:
         condition: service_healthy
       kafka:
         condition: service_healthy
-    develop:
-      watch:
-        - action: sync
-          path: ./auth-service
-          target: /app
-          ignore:
-            - target/
-            - "**/mvnw"
-            - "**/mvnw.cmd"
-            - "**/.mvn/"
-        - action: rebuild
-          path: ./auth-service/pom.xml
 
   user-service:
     build:
       context: ./user-service
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: user-service
     depends_on:
       users-db:
         condition: service_healthy
-    develop:
-      watch:
-        - action: sync
-          path: ./user-service
-          target: /app
-          ignore:
-            - target/
-            - "**/mvnw"
-            - "**/mvnw.cmd"
-            - "**/.mvn/"
-        - action: rebuild
-          path: ./user-service/pom.xml
 
   email-service:
     build:
       context: ./email-service
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: email-service
     depends_on:
       email-db:
         condition: service_healthy
       kafka:
         condition: service_healthy
-    develop:
-      watch:
-        - action: sync
-          path: ./email-service
-          target: /app
-          ignore:
-            - target/
-            - "**/mvnw"
-            - "**/mvnw.cmd"
-            - "**/.mvn/"
-        - action: rebuild
-          path: ./email-service/pom.xml
 
   client-vite:
     build:
       context: ./client-vite
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: http://localhost:8080
     container_name: client-vite
     ports:
       - "5173:5173"
     env_file:
       - ./client-vite/.env
-    develop:
-      watch:
-        - action: sync
-          path: ./client-vite
-          target: /app
-          ignore:
-            - node_modules/
-        - action: rebuild
-          path: package.json
 
   client-next:
     build:
       context: ./client-next
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+      args:
+        BACKEND_URL: http://api-gateway:8080
+        NEXT_PUBLIC_BACKEND_URL: http://localhost:8080
     container_name: client-next
     ports:
       - "3000:3000"
     env_file:
       - ./client-next/.env
-    develop:
-      watch:
-        - action: sync
-          path: ./client-next
-          target: /app
-          ignore:
-            - node_modules/
-            - .next/
-        - action: rebuild
-          path: package.json
 
 volumes:
   users-db:

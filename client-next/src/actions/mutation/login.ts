@@ -29,7 +29,7 @@ export async function loginAction(_prevState: any, formData: FormData) {
     });
 
     const cookieStore = await cookies();
-    const cookieData = setCookieParser(res.headers["set-cookie"]);
+    const cookieData = setCookieParser(res.headers["set-cookie"] || []);
 
     cookieData.forEach((cookie) => {
       // @ts-ignore
