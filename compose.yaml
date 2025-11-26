@@ -9,7 +9,7 @@ services:
     volumes:
       - users-db:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U raghav -d default" ]
+      test: ["CMD-SHELL", "pg_isready -U raghav -d default"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -17,7 +17,7 @@ services:
   email-db:
     image: mongo:7
     container_name: email-db
-    command: [ "mongod", "--quiet", "--logpath", "/dev/null" ] # disable useless logs
+    command: ["mongod", "--quiet", "--logpath", "/dev/null"] # disable useless logs
     environment:
       MONGO_INITDB_ROOT_USERNAME: raghav
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -25,7 +25,7 @@ services:
     volumes:
       - email-db:/data/db
     healthcheck:
-      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -33,7 +33,12 @@ services:
   kafka:
     image: public.ecr.aws/bitnami/kafka:3.9.0
     container_name: kafka
-    command: [ "bash", "-c", "exec >/dev/null 2>&1 && /opt/bitnami/scripts/kafka/run.sh" ]
+    command:
+      [
+        "bash",
+        "-c",
+        "exec >/dev/null 2>&1 && /opt/bitnami/scripts/kafka/run.sh",
+      ]
     environment:
       KAFKA_ENABLE_KRAFT: yes
       KAFKA_CFG_NODE_ID: 1
@@ -144,19 +149,19 @@ services:
         - action: rebuild
           path: ./email-service/pom.xml
 
-  client:
+  client-vite:
     build:
-      context: ./client
+      context: ./client-vite
       dockerfile: Dockerfile.dev
-    container_name: client
+    container_name: client-vite
     ports:
       - "5173:5173"
     env_file:
-      - ./client/.env
+      - ./client-vite/.env
     develop:
       watch:
         - action: sync
-          path: ./client
+          path: ./client-vite
           target: /app
           ignore:
             - node_modules/
