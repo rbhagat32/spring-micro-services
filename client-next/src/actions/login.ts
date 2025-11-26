@@ -4,18 +4,20 @@ import { axios } from "@/lib/axios";
 import { loginSchema } from "@/schemas/login";
 import { type UserDTO } from "@/types/types";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import setCookieParser from "set-cookie-parser";
 
-export async function loginAction(formData: FormData) {
+export async function loginAction(_prevState: any, formData: FormData) {
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
   });
 
   if (!parsed.success) {
-    console.log("Login validation failed", parsed.error);
-    return;
+    return {
+      success: false,
+      zodErrors: parsed.error.flatten().fieldErrors,
+      message: "Validation failed",
+    };
   }
 
   const { email, password } = parsed.data;
@@ -34,9 +36,12 @@ export async function loginAction(formData: FormData) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       cookieStore.set(cookie.name, cookie.value, { ...cookie });
     });
-  } catch (error) {
-    console.error("Login failed:", error);
-  }
 
-  redirect("/");
+    return { success: true };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "LULULU",
+    };
+  }
 }
