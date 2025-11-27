@@ -5,7 +5,7 @@ ARG VITE_BACKEND_URL
 ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --frozen-lockfile
 COPY . .
 RUN npm run build
 
@@ -13,5 +13,6 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 RUN npm install -g serve
 COPY --from=builder /app/dist ./dist
+
 EXPOSE 5173
 CMD ["serve", "-s", "dist", "-l", "5173"]
