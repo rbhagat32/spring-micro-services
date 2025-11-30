@@ -10,11 +10,6 @@ grpc:
   server:
     port: 9091
 
-frontend:
-  url:
-    dev: http://localhost:5173
-    prod: http://localhost:3000
-
 spring:
   datasource:
     url: jdbc:postgresql://users-db:5432/default
