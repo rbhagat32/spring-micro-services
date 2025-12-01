@@ -11,6 +11,10 @@ auth:
     grpc:
       port: 9091
 
+logging:
+  level:
+    org.hibernate: OFF
+
 spring:
   datasource:
     url: jdbc:postgresql://users-db:5432/default
