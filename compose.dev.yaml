@@ -149,42 +149,22 @@ services:
         - action: rebuild
           path: ./email-service/pom.xml
 
-  client-vite:
+  client:
     build:
-      context: ./client-vite
+      context: ./client
       dockerfile: Dockerfile.dev
-    container_name: client-vite
+    container_name: client
     ports:
       - "5173:5173"
     env_file:
-      - ./client-vite/.env
+      - ./client/.env
     develop:
       watch:
         - action: sync
-          path: ./client-vite
+          path: ./client
           target: /app
           ignore:
             - node_modules/
-        - action: rebuild
-          path: package.json
-
-  client-next:
-    build:
-      context: ./client-next
-      dockerfile: Dockerfile.dev
-    container_name: client-next
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./client-next/.env
-    develop:
-      watch:
-        - action: sync
-          path: ./client-next
-          target: /app
-          ignore:
-            - node_modules/
-            - .next/
         - action: rebuild
           path: package.json
 

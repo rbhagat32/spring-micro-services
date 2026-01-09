@@ -6,9 +6,9 @@ clean:
 	docker image prune -f
 	docker volume prune -f
 
-prod:
-	docker build -t rbhagat32/api-gateway:latest ./api-gateway
-	docker build -t rbhagat32/auth-service:latest ./auth-service
-	docker build -t rbhagat32/user-service:latest ./user-service
-	docker build -t rbhagat32/email-service:latest ./email-service
-	docker build -t rbhagat32/client:latest --build-arg VITE_BACKEND_URL=http://localhost:8080 ./client
+build:
+	docker build -t rbhagat32/api-gateway ./api-gateway
+	docker build -t rbhagat32/auth-service ./auth-service
+	docker build -t rbhagat32/user-service ./user-service
+	docker build -t rbhagat32/email-service ./email-service
+	docker build -t rbhagat32/client --build-arg VITE_BACKEND_URL=http://localhost:8080 ./client
