@@ -7,10 +7,10 @@ export const Route = createFileRoute("/_auth")({
     if (isLoggedIn === undefined) return;
     if (isLoggedIn) throw redirect({ to: "/" });
   },
-  component: RouteComponent,
+  component: AuthLayout,
 });
 
-function RouteComponent() {
+function AuthLayout() {
   return (
     <main className="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <section className="w-full max-w-sm md:max-w-3xl">

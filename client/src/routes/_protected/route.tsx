@@ -9,10 +9,10 @@ export const Route = createFileRoute("/_protected")({
     if (isLoggedIn === undefined) return;
     if (!isLoggedIn) throw redirect({ to: "/login" });
   },
-  component: RouteComponent,
+  component: ProtectedLayout,
 });
 
-function RouteComponent() {
+function ProtectedLayout() {
   return (
     <main className="container mx-auto p-4">
       <Navbar />

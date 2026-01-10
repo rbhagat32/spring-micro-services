@@ -13,10 +13,10 @@ import { useSignupMutation } from "@/store/api";
 import { type SignupFormData } from "@/types/types";
 
 export const Route = createFileRoute("/_auth/signup")({
-  component: RouteComponent,
+  component: SignupPage,
 });
 
-function RouteComponent() {
+function SignupPage() {
   const [signup, { isLoading }] = useSignupMutation();
 
   const {
