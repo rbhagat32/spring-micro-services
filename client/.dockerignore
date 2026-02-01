@@ -20,4 +20,3 @@ Dockerfile*
 .dockerignore
 
 .tanstack
-src/routeTree.gen.ts

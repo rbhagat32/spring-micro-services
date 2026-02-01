@@ -1,9 +1,0 @@
-### GetLoggedInUser GRPC request on Auth-Service
-
-GRPC http://localhost:9091/GetLoggedInUserService/GetLoggedInUser
-
-{
-  "TOKEN": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjY2JhYjcwYi1iYzcxLTQ4ZWEtOTNkNS1kZDc3MmE3NGQ2YzYiLCJpYXQiOjE3NjI5MjExODEsImV4cCI6MTc2NDIxNzE4MX0.__NWyzY4EqqUV7Q-3mMaTs8Ir6Me_WIYR5v1yJ1wUvKTfPSsHsgJJ2I5Hdo3iEXlY-yD2npsL9DmN42n8mG8sw"
-}
-
-###

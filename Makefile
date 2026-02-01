@@ -7,8 +7,15 @@ clean:
 	docker volume prune -f
 
 build:
-	docker build -t rbhagat32/api-gateway ./api-gateway
-	docker build -t rbhagat32/auth-service ./auth-service
-	docker build -t rbhagat32/user-service ./user-service
-	docker build -t rbhagat32/email-service ./email-service
-	docker build -t rbhagat32/client --build-arg VITE_BACKEND_URL=http://localhost:8080 ./client
+	docker build -t rbhagat32/micro-api-gateway ./api-gateway
+	docker build -t rbhagat32/micro-auth-service ./auth-service
+	docker build -t rbhagat32/micro-user-service ./user-service
+	docker build -t rbhagat32/micro-email-service ./email-service
+	docker build -t rbhagat32/micro-client --build-arg VITE_BACKEND_URL=http://localhost:8080 ./client
+
+push:
+	docker push rbhagat32/micro-api-gateway
+	docker push rbhagat32/micro-auth-service
+	docker push rbhagat32/micro-user-service
+	docker push rbhagat32/micro-email-service
+	docker push rbhagat32/micro-client
